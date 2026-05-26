@@ -84,10 +84,9 @@ export default function ProgramsSection() {
 
       <div ref={trackRef} style={{ display: "flex", gap: "2px", paddingLeft: "5vw", paddingBottom: "5rem" }}>
         {PROGRAMS.map((program) => (
-          <div key={program.id} className="cursor-hover" style={{
+          <div key={program.id} className="cursor-hover group" style={{
             flexShrink: 0, width: "clamp(320px, 35vw, 480px)",
-            background: "var(--surface)", position: "relative", overflow: "hidden",
-            group: "true",
+            background: "var(--surface)", position: "relative", overflow: "hidden"
           }}>
             <div style={{ position: "relative", height: "500px", overflow: "hidden" }}>
               <Image

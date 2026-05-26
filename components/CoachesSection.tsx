@@ -54,7 +54,7 @@ export default function CoachesSection() {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
         {COACHES.map((coach, i) => (
-          <div key={i} className="coach-card cursor-hover" style={{ position: "relative", height: "600px", overflow: "hidden", group: "true" }}>
+          <div key={i} className="coach-card cursor-hover group" style={{ position: "relative", height: "600px", overflow: "hidden" }}>
             <Image src={coach.image} alt={coach.name} fill style={{ objectFit: "cover", filter: "grayscale(100%)", transition: "filter 0.5s, transform 0.8s", transform: "scale(1)" }} onMouseEnter={(e) => { e.currentTarget.style.filter = "grayscale(0%)"; e.currentTarget.style.transform = "scale(1.05)"; }} onMouseLeave={(e) => { e.currentTarget.style.filter = "grayscale(100%)"; e.currentTarget.style.transform = "scale(1)"; }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "2rem" }}>

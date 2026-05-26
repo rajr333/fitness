@@ -99,7 +99,7 @@ body {
 .font-sub { font-family: var(--font-sub); }
 
 .text-hero {
-  font-size: clamp(7rem, 18vw, 18rem);
+  font-size: clamp(4.5rem, 18vw, 18rem);
   line-height: 0.82;
   letter-spacing: -0.02em;
   font-family: var(--font-display);
@@ -107,7 +107,7 @@ body {
 }
 
 .text-display {
-  font-size: clamp(3.5rem, 9vw, 9rem);
+  font-size: clamp(2.75rem, 9vw, 9rem);
   line-height: 0.88;
   font-family: var(--font-display);
   text-transform: uppercase;
@@ -176,6 +176,15 @@ body {
   height: 100%;
   pointer-events: none;
   opacity: 0.35;
+}
+
+/* Hide scrollbar for horizontal mobile scrolling */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Reduced motion */

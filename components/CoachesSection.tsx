@@ -44,7 +44,7 @@ export default function CoachesSection() {
   }, []);
 
   return (
-    <section id="coaches" ref={sectionRef} style={{ background: "var(--background)", padding: "10rem 5vw" }}>
+    <section id="coaches" ref={sectionRef} className="py-24 px-5 md:py-40 md:px-[5vw]" style={{ background: "var(--background)" }}>
       <div style={{ textAlign: "center", marginBottom: "5rem" }}>
         <SectionLabel label="Our Experts" />
         <h2 className="text-display" style={{ color: "var(--white)" }}>
@@ -52,9 +52,9 @@ export default function CoachesSection() {
         </h2>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {COACHES.map((coach, i) => (
-          <div key={i} className="coach-card cursor-hover group" style={{ position: "relative", height: "600px", overflow: "hidden" }}>
+          <div key={i} className="coach-card cursor-hover group relative overflow-hidden h-[450px] md:h-[600px]">
             <Image src={coach.image} alt={coach.name} fill style={{ objectFit: "cover", filter: "grayscale(100%)", transition: "filter 0.5s, transform 0.8s", transform: "scale(1)" }} onMouseEnter={(e) => { e.currentTarget.style.filter = "grayscale(0%)"; e.currentTarget.style.transform = "scale(1.05)"; }} onMouseLeave={(e) => { e.currentTarget.style.filter = "grayscale(100%)"; e.currentTarget.style.transform = "scale(1)"; }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "2rem" }}>

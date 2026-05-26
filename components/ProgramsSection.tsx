@@ -51,9 +51,11 @@ const PROGRAMS = [
 export default function ProgramsSection() {
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // GSAP horizontal scroll
+  // GSAP horizontal scroll (Desktop only)
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    const ctx = gsap.matchMedia();
+    
+    ctx.add("(min-width: 768px)", () => {
       const track = trackRef.current;
       if (!track) return;
       const totalWidth = track.scrollWidth - window.innerWidth;
@@ -70,6 +72,7 @@ export default function ProgramsSection() {
         },
       });
     });
+
     return () => ctx.revert();
   }, []);
 
@@ -82,9 +85,10 @@ export default function ProgramsSection() {
         </h2>
       </div>
 
-      <div ref={trackRef} style={{ display: "flex", gap: "2px", paddingLeft: "5vw", paddingBottom: "5rem" }}>
+      {/* Track Container: Native snap scroll on mobile, GSAP animated on desktop */}
+      <div ref={trackRef} className="flex gap-2 pl-[5vw] pr-[5vw] pb-[5rem] overflow-x-auto md:overflow-visible snap-x snap-mandatory hide-scrollbar">
         {PROGRAMS.map((program) => (
-          <div key={program.id} className="cursor-hover group" style={{
+          <div key={program.id} className="cursor-hover group snap-center" style={{
             flexShrink: 0, width: "clamp(320px, 35vw, 480px)",
             background: "var(--surface)", position: "relative", overflow: "hidden"
           }}>

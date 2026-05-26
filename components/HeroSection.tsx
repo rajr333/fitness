@@ -121,6 +121,7 @@ export default function HeroSection() {
             textTransform: "uppercase", padding: "0.9rem 2.5rem",
             background: "var(--electric)", color: "#000", fontWeight: 700,
             textDecoration: "none", transition: "background 0.3s",
+            minHeight: "44px", display: "inline-flex", alignItems: "center", justifyContent: "center"
           }}>
             EXPLORE PROGRAMS
           </a>
@@ -129,6 +130,7 @@ export default function HeroSection() {
             textTransform: "uppercase", padding: "0.9rem 2.5rem",
             border: "1px solid rgba(255,255,255,0.2)", color: "var(--white)",
             textDecoration: "none", transition: "border-color 0.3s",
+            minHeight: "44px", display: "inline-flex", alignItems: "center", justifyContent: "center"
           }}>
             JOIN TODAY →
           </a>
@@ -136,9 +138,9 @@ export default function HeroSection() {
       </div>
 
       {/* Stats bar */}
-      <div style={{
+      <div className="flex flex-col md:flex-row" style={{
         position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 4,
-        display: "flex", borderTop: "1px solid var(--glass-border)",
+        borderTop: "1px solid var(--glass-border)",
         background: "rgba(10,10,10,0.7)", backdropFilter: "blur(10px)"
       }}>
         {[
@@ -147,9 +149,8 @@ export default function HeroSection() {
           { num: "97%", label: "Retention Rate" },
           { num: "6", label: "Locations" },
         ].map((stat, i) => (
-          <div key={i} style={{
-            flex: 1, padding: "1.25rem 2rem", textAlign: "center",
-            borderRight: i < 3 ? "1px solid var(--glass-border)" : "none"
+          <div key={i} className="flex-1 p-4 md:p-5 text-center border-b md:border-b-0 md:border-r border-white/10 last:border-0" style={{
+            borderColor: "var(--glass-border)"
           }}>
             <div style={{ fontFamily: "var(--font-display)", fontSize: "2rem", color: "var(--electric)", lineHeight: 1 }}>
               {stat.num}

@@ -61,10 +61,10 @@ export default function AnatomySection() {
 
   return (
     <section ref={sectionRef} style={{ background: "var(--background)", height: "200vh", position: "relative" }}>
-      <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center" }}>
+      <div className="sticky top-0 h-[100vh] flex flex-col md:flex-row items-center pt-20 md:pt-0">
         
-        {/* Left Side: 3D Canvas */}
-        <div style={{ width: "50%", height: "100%", position: "relative" }}>
+        {/* Canvas (Top on mobile, Left on desktop) */}
+        <div className="w-full md:w-1/2 h-[40vh] md:h-full relative">
           <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
             <ambientLight intensity={0.5} />
             <directionalLight position={[10, 10, 5]} intensity={1} color="#E8FF00" />
@@ -78,8 +78,8 @@ export default function AnatomySection() {
           }} />
         </div>
 
-        {/* Right Side: Text Sequence */}
-        <div style={{ width: "50%", padding: "5vw" }}>
+        {/* Text Sequence (Bottom on mobile, Right on desktop) */}
+        <div className="w-full md:w-1/2 h-[60vh] md:h-full p-[5vw] flex flex-col justify-center md:block">
           <SectionLabel label="Biomechanics" />
           <h2 className="text-display" style={{ color: "var(--white)", marginBottom: "3rem" }}>
             PRECISION<br /><span style={{ color: "var(--ember)" }}>ENGINEERED</span>

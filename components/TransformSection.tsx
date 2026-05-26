@@ -24,7 +24,7 @@ export default function TransformSection() {
   }, []);
 
   return (
-    <section id="transform" style={{ background: "var(--surface)", padding: "8rem 5vw", overflow: "hidden" }}>
+    <section id="transform" className="py-24 px-5 md:py-32 md:px-[5vw] overflow-hidden" style={{ background: "var(--surface)" }}>
       <div style={{ textAlign: "center", marginBottom: "4rem" }}>
         <SectionLabel label="Results" />
         <h2 className="text-display" style={{ color: "var(--white)" }}>
@@ -34,9 +34,8 @@ export default function TransformSection() {
 
       <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
         {/* Slider Container */}
-        <div ref={sliderRef} style={{
-          position: "relative", height: "600px", width: "100%", overflow: "hidden",
-          border: "1px solid var(--glass-border)"
+        <div ref={sliderRef} className="relative w-full overflow-hidden h-[450px] md:h-[600px]" style={{
+          border: "1px solid var(--glass-border)", touchAction: "none"
         }}>
           
           {/* After Image (Background) */}
@@ -63,16 +62,16 @@ export default function TransformSection() {
         </div>
 
         {/* Stats */}
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "2rem", padding: "2rem", background: "var(--surface-2)", border: "1px solid var(--glass-border)" }}>
-          <div>
+        <div className="flex flex-col md:flex-row justify-between mt-8 p-8 bg-[var(--surface-2)] gap-8 md:gap-0" style={{ border: "1px solid var(--glass-border)" }}>
+          <div className="text-center md:text-left">
             <div style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", color: "var(--white)", lineHeight: 1 }}>12 WEEKS</div>
             <div className="text-label">Duration</div>
           </div>
-          <div>
+          <div className="text-center md:text-left">
             <div style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", color: "var(--electric)", lineHeight: 1 }}>-8.5 KG</div>
             <div className="text-label">Weight Lost</div>
           </div>
-          <div>
+          <div className="text-center md:text-left">
             <div style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", color: "var(--ember)", lineHeight: 1 }}>-6%</div>
             <div className="text-label">Body Fat</div>
           </div>

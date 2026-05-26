@@ -37,7 +37,7 @@ export default function CallNowSection() {
   };
 
   return (
-    <section id="call-now" style={{ position: "relative", padding: "10rem 5vw", background: "var(--background)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center" }}>
+    <section id="call-now" className="relative py-24 px-5 md:py-40 md:px-[5vw] overflow-hidden flex items-center justify-center text-center" style={{ background: "var(--background)" }}>
       <AtmosphereLayer particleCount={50} color="255,255,255" />
       
       <div style={{ position: "relative", zIndex: 10 }}>
@@ -68,7 +68,8 @@ export default function CallNowSection() {
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 20, opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              style={{ background: "var(--surface)", border: "1px solid var(--glass-border)", padding: "3rem", width: "100%", maxWidth: "500px", position: "relative" }}
+              className="w-[95%] md:w-full max-h-[90vh] overflow-y-auto"
+              style={{ background: "var(--surface)", border: "1px solid var(--glass-border)", padding: "2rem md:3rem", maxWidth: "500px", position: "relative" }}
             >
               <button
                 onClick={() => setIsModalOpen(false)}
@@ -97,29 +98,29 @@ export default function CallNowSection() {
                   <input type="hidden" name="_subject" value="New Consultation Request - FORZE" />
                   
                   <div>
-                    <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem" }}>Full Name</label>
-                    <input required type="text" name="name" style={{ width: "100%", padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
+                    <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem", textAlign: "left" }}>Full Name</label>
+                    <input required type="text" name="name" className="w-full min-h-[44px]" style={{ padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
                   </div>
                   
-                  <div style={{ display: "flex", gap: "1rem" }}>
-                    <div style={{ flex: 1 }}>
-                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem" }}>Email</label>
-                      <input required type="email" name="email" style={{ width: "100%", padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <div className="flex-1">
+                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem", textAlign: "left" }}>Email</label>
+                      <input required type="email" name="email" className="w-full min-h-[44px]" style={{ padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
                     </div>
-                    <div style={{ flex: 1 }}>
-                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem" }}>Phone</label>
-                      <input required type="tel" name="phone" style={{ width: "100%", padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
+                    <div className="flex-1">
+                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem", textAlign: "left" }}>Phone</label>
+                      <input required type="tel" name="phone" className="w-full min-h-[44px]" style={{ padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
                     </div>
                   </div>
 
-                  <div style={{ display: "flex", gap: "1rem" }}>
-                    <div style={{ flex: 1 }}>
-                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem" }}>Age</label>
-                      <input required type="number" name="age" min="16" max="100" style={{ width: "100%", padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
+                  <div className="flex flex-col md:flex-row gap-4">
+                    <div className="flex-1">
+                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem", textAlign: "left" }}>Age</label>
+                      <input required type="number" name="age" min="16" max="100" className="w-full min-h-[44px]" style={{ padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"} />
                     </div>
-                    <div style={{ flex: 2 }}>
-                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem" }}>Fitness Goal</label>
-                      <select required name="goal" style={{ width: "100%", padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", appearance: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"}>
+                    <div className="flex-[2]">
+                      <label style={{ display: "block", fontFamily: "var(--font-sub)", fontSize: "0.8rem", letterSpacing: "0.1em", color: "var(--silver)", textTransform: "uppercase", marginBottom: "0.5rem", textAlign: "left" }}>Fitness Goal</label>
+                      <select required name="goal" className="w-full min-h-[44px]" style={{ padding: "1rem", background: "var(--surface-2)", border: "1px solid var(--ash)", color: "var(--white)", outline: "none", appearance: "none", transition: "border-color 0.3s" }} onFocus={(e) => e.currentTarget.style.borderColor = "var(--electric)"} onBlur={(e) => e.currentTarget.style.borderColor = "var(--ash)"}>
                         <option value="Weight Loss">Weight Loss</option>
                         <option value="Muscle Gain">Muscle Gain</option>
                         <option value="Endurance">Endurance</option>
@@ -129,7 +130,7 @@ export default function CallNowSection() {
                     </div>
                   </div>
 
-                  <button type="submit" style={{ marginTop: "1rem", width: "100%", padding: "1.25rem", background: "var(--electric)", color: "#000", border: "none", fontFamily: "var(--font-sub)", fontSize: "1rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: "bold", cursor: "pointer", transition: "background 0.3s, box-shadow 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 20px rgba(232,255,0,0.4)"} onMouseLeave={(e) => e.currentTarget.style.boxShadow = "none"}>
+                  <button type="submit" className="min-h-[44px]" style={{ marginTop: "1rem", width: "100%", padding: "1.25rem", background: "var(--electric)", color: "#000", border: "none", fontFamily: "var(--font-sub)", fontSize: "1rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: "bold", cursor: "pointer", transition: "background 0.3s, box-shadow 0.3s" }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 0 20px rgba(232,255,0,0.4)"} onMouseLeave={(e) => e.currentTarget.style.boxShadow = "none"}>
                     BOOK NOW
                   </button>
                 </form>

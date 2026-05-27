@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Sphere, MeshDistortMaterial } from "@react-three/drei";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import * as THREE from "three";
 import SectionLabel from "./ui/SectionLabel";
 

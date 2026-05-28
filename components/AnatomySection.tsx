@@ -77,13 +77,13 @@ export default function AnatomySection() {
 
     const loadBatch = async (muscle: string) => {
       const frames: HTMLImageElement[] = [];
-      let index = 0;
+      let index = 1; // start from 1
       let keepGoing = true;
       while (keepGoing) {
         const batch = [];
         for(let i=0; i<10; i++) {
-          const paddedIndex = String(index + i).padStart(6, '0');
-          const url = `/videos/muscles/frames/${muscle}/frame_${paddedIndex}.png`;
+          const paddedIndex = String(index + i).padStart(3, '0');
+          const url = `/videos/muscles/frames/${muscle}/ezgif-frame-${paddedIndex}.jpg`;
           batch.push(new Promise<{img?: HTMLImageElement, success: boolean}>(resolve => {
             const img = new Image();
             img.onload = () => resolve({ img, success: true });

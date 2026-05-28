@@ -146,38 +146,30 @@ export default function AnatomySection() {
           );
         });
 
-        // Frame scrubbing CHEST
+        // Continuous Frame Animation CHEST
         if (cf.length > 0) {
           gsap.to(chestProgress, {
             frame: cf.length - 1,
             snap: "frame",
             ease: "none",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top center",
-              end: "top+=15% center",
-              scrub: 0,
-              onUpdate: () => {
-                if (activeCanvasMuscle === "CHEST") drawFrame(canvasRef.current, cf[Math.round(chestProgress.frame)]);
-              }
+            duration: cf.length / 30, // 30 fps
+            repeat: -1,
+            onUpdate: () => {
+              if (activeCanvasMuscle === "CHEST") drawFrame(canvasRef.current, cf[Math.round(chestProgress.frame)]);
             }
           });
         }
 
-        // Frame scrubbing BACK
+        // Continuous Frame Animation BACK
         if (bf.length > 0) {
           gsap.to(backProgress, {
             frame: bf.length - 1,
             snap: "frame",
             ease: "none",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top+=15% center",
-              end: "top+=30% center",
-              scrub: 0,
-              onUpdate: () => {
-                if (activeCanvasMuscle === "BACK") drawFrame(canvasRef.current, bf[Math.round(backProgress.frame)]);
-              }
+            duration: bf.length / 30, // 30 fps
+            repeat: -1,
+            onUpdate: () => {
+              if (activeCanvasMuscle === "BACK") drawFrame(canvasRef.current, bf[Math.round(backProgress.frame)]);
             }
           });
         }

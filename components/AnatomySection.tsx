@@ -214,7 +214,9 @@ export default function AnatomySection() {
 
         const switchVisual = (group: string) => {
           let target = group;
-          if (group !== "CHEST" && group !== "BACK" && group !== "SHOULDERS" && group !== "ARMS") target = "3D";
+          if (group === "CORE" || group === "LEGS") {
+            target = "ARMS";
+          }
           
           if (currentVisual === target) return;
           

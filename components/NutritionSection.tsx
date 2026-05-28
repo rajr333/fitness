@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import { gsap } from "@/lib/gsap";
-import Image from "next/image";
 import SectionLabel from "./ui/SectionLabel";
 
 const TABS = ["Meal Plans", "Supplements", "Macros Calculator"];
@@ -10,6 +9,8 @@ const TABS = ["Meal Plans", "Supplements", "Macros Calculator"];
 export default function NutritionSection() {
   const [activeTab, setActiveTab] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -20,14 +21,115 @@ export default function NutritionSection() {
     );
   }, [activeTab]);
 
+  useEffect(() => {
+    let frames: HTMLImageElement[] = [];
+    let progress = { frame: 0 };
+    let ctx: gsap.Context;
+
+    const drawFrame = (canvas: HTMLCanvasElement | null, img: HTMLImageElement | undefined) => {
+      if (!canvas || !img) return;
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const canvasRatio = canvas.width / canvas.height;
+      const imgRatio = img.width / img.height;
+      let renderWidth = canvas.width;
+      let renderHeight = canvas.height;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      if (imgRatio > canvasRatio) {
+        renderWidth = canvas.height * imgRatio;
+        offsetX = (canvas.width - renderWidth) / 2;
+      } else {
+        renderHeight = canvas.width / imgRatio;
+        offsetY = (canvas.height - renderHeight) / 2;
+      }
+
+      context.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
+    };
+
+    const loadBatch = async () => {
+      const loadedFrames: HTMLImageElement[] = [];
+      let index = 1; // start from 1
+      let keepGoing = true;
+      while (keepGoing) {
+        const batch = [];
+        for(let i=0; i<10; i++) {
+          const paddedIndex = String(index + i).padStart(3, '0');
+          const url = `/videos/nutrition/frames/ezgif-frame-${paddedIndex}.jpg`;
+          batch.push(new Promise<{img?: HTMLImageElement, success: boolean}>(resolve => {
+            const img = new Image();
+            img.onload = () => resolve({ img, success: true });
+            img.onerror = () => resolve({ success: false });
+            img.src = url;
+          }));
+        }
+        const results = await Promise.all(batch);
+        for(let res of results) {
+          if (res.success && res.img) {
+            loadedFrames.push(res.img);
+          } else {
+            keepGoing = false;
+            break;
+          }
+        }
+        index += 10;
+        
+        if (index > 300) keepGoing = false; 
+      }
+      return loadedFrames;
+    };
+
+    const resizeCanvas = () => {
+      if (canvasRef.current && canvasContainerRef.current) {
+        canvasRef.current.width = canvasContainerRef.current.clientWidth;
+        canvasRef.current.height = canvasContainerRef.current.clientHeight;
+        if (frames.length > 0) {
+          drawFrame(canvasRef.current, frames[Math.round(progress.frame)]);
+        }
+      }
+    };
+
+    window.addEventListener("resize", resizeCanvas);
+
+    loadBatch().then((f) => {
+      frames = f;
+      resizeCanvas();
+
+      if (f.length > 0) drawFrame(canvasRef.current, f[0]);
+
+      ctx = gsap.context(() => {
+        if (f.length > 0) {
+          gsap.to(progress, {
+            frame: f.length - 1,
+            snap: "frame",
+            ease: "none",
+            duration: f.length / 30, // 30 fps
+            repeat: -1,
+            onUpdate: () => {
+              drawFrame(canvasRef.current, f[Math.round(progress.frame)]);
+            }
+          });
+        }
+      });
+    });
+
+    return () => {
+      if (ctx) ctx.revert();
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, []);
+
   return (
     <section id="nutrition" style={{ background: "var(--background)", padding: "8rem 5vw" }}>
       <div style={{ display: "flex", gap: "4rem", flexWrap: "wrap" }}>
         
-        {/* Left: Image Placeholder */}
-        <div style={{ flex: 1, minWidth: "300px", position: "relative", minHeight: "500px", border: "1px solid var(--glass-border)" }}>
-           <Image src={activeTab === 1 ? "/images/nutrition/supplement-hero.webp" : "/images/nutrition/meal-1.webp"} alt="Nutrition" fill style={{ objectFit: "cover" }} />
-           <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)" }} />
+        {/* Left: Canvas Animation */}
+        <div ref={canvasContainerRef} style={{ flex: 1, minWidth: "300px", position: "relative", minHeight: "500px", border: "1px solid var(--glass-border)", overflow: "hidden" }}>
+           <canvas ref={canvasRef} style={{ display: "block", width: "100%", height: "100%", position: "absolute", inset: 0, zIndex: 1 }} />
+           <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 2, pointerEvents: "none" }} />
         </div>
 
         {/* Right: Content */}

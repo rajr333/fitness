@@ -44,9 +44,13 @@ export default function AnatomySection() {
   useEffect(() => {
     let chestFrames: HTMLImageElement[] = [];
     let backFrames: HTMLImageElement[] = [];
+    let shouldersFrames: HTMLImageElement[] = [];
+    let armsFrames: HTMLImageElement[] = [];
     
     let chestProgress = { frame: 0 };
     let backProgress = { frame: 0 };
+    let shouldersProgress = { frame: 0 };
+    let armsProgress = { frame: 0 };
     let activeCanvasMuscle = "CHEST";
     let currentVisual = "CHEST";
     let ctx: gsap.Context;
@@ -116,15 +120,21 @@ export default function AnatomySection() {
           drawFrame(canvasRef.current, chestFrames[Math.round(chestProgress.frame)]);
         } else if (activeCanvasMuscle === "BACK" && backFrames.length > 0) {
           drawFrame(canvasRef.current, backFrames[Math.round(backProgress.frame)]);
+        } else if (activeCanvasMuscle === "SHOULDERS" && shouldersFrames.length > 0) {
+          drawFrame(canvasRef.current, shouldersFrames[Math.round(shouldersProgress.frame)]);
+        } else if (activeCanvasMuscle === "ARMS" && armsFrames.length > 0) {
+          drawFrame(canvasRef.current, armsFrames[Math.round(armsProgress.frame)]);
         }
       }
     };
 
     window.addEventListener("resize", resizeCanvas);
 
-    Promise.all([loadBatch('chest'), loadBatch('back')]).then(([cf, bf]) => {
+    Promise.all([loadBatch('chest'), loadBatch('back'), loadBatch('shoulders'), loadBatch('arms')]).then(([cf, bf, sf, af]) => {
       chestFrames = cf;
       backFrames = bf;
+      shouldersFrames = sf;
+      armsFrames = af;
       resizeCanvas();
 
       if (cf.length > 0) drawFrame(canvasRef.current, cf[0]);
@@ -174,27 +184,52 @@ export default function AnatomySection() {
           });
         }
 
+        // Continuous Frame Animation SHOULDERS
+        if (sf.length > 0) {
+          gsap.to(shouldersProgress, {
+            frame: sf.length - 1,
+            snap: "frame",
+            ease: "none",
+            duration: sf.length / 30, // 30 fps
+            repeat: -1,
+            onUpdate: () => {
+              if (activeCanvasMuscle === "SHOULDERS") drawFrame(canvasRef.current, sf[Math.round(shouldersProgress.frame)]);
+            }
+          });
+        }
+
+        // Continuous Frame Animation ARMS
+        if (af.length > 0) {
+          gsap.to(armsProgress, {
+            frame: af.length - 1,
+            snap: "frame",
+            ease: "none",
+            duration: af.length / 30, // 30 fps
+            repeat: -1,
+            onUpdate: () => {
+              if (activeCanvasMuscle === "ARMS") drawFrame(canvasRef.current, af[Math.round(armsProgress.frame)]);
+            }
+          });
+        }
+
         const switchVisual = (group: string) => {
           let target = group;
-          if (group !== "CHEST" && group !== "BACK") target = "3D";
+          if (group !== "CHEST" && group !== "BACK" && group !== "SHOULDERS" && group !== "ARMS") target = "3D";
           
           if (currentVisual === target) return;
           
           if (target === "3D") {
             gsap.to(canvasContainerRef.current, { opacity: 0, duration: 0.4 });
             gsap.to(threeContainerRef.current, { opacity: 1, duration: 0.4 });
-          } else if (target === "CHEST") {
+          } else {
+            // It's a canvas target
             gsap.to(threeContainerRef.current, { opacity: 0, duration: 0.4 });
             gsap.to(canvasContainerRef.current, { opacity: 0, duration: 0.4, onComplete: () => {
-              activeCanvasMuscle = "CHEST";
-              if (cf.length > 0) drawFrame(canvasRef.current, cf[Math.round(chestProgress.frame)]);
-              gsap.to(canvasContainerRef.current, { opacity: 1, duration: 0.4 });
-            }});
-          } else if (target === "BACK") {
-            gsap.to(threeContainerRef.current, { opacity: 0, duration: 0.4 });
-            gsap.to(canvasContainerRef.current, { opacity: 0, duration: 0.4, onComplete: () => {
-              activeCanvasMuscle = "BACK";
-              if (bf.length > 0) drawFrame(canvasRef.current, bf[Math.round(backProgress.frame)]);
+              activeCanvasMuscle = target;
+              if (target === "CHEST" && cf.length > 0) drawFrame(canvasRef.current, cf[Math.round(chestProgress.frame)]);
+              else if (target === "BACK" && bf.length > 0) drawFrame(canvasRef.current, bf[Math.round(backProgress.frame)]);
+              else if (target === "SHOULDERS" && sf.length > 0) drawFrame(canvasRef.current, sf[Math.round(shouldersProgress.frame)]);
+              else if (target === "ARMS" && af.length > 0) drawFrame(canvasRef.current, af[Math.round(armsProgress.frame)]);
               gsap.to(canvasContainerRef.current, { opacity: 1, duration: 0.4 });
             }});
           }
